@@ -12,9 +12,10 @@ end
 -%>
 <%- if p("ha_proxy.enable_health_check_http") -%>
 check host haproxy-health address localhost
+  depends on haproxy
   if failed host localhost port <%= p("ha_proxy.health_check_port") -%> protocol http
      and request "/health"
-     with timeout <%= timeout -%> seconds for 2 cycles
+     with timeout <%= timeout -%> seconds
   then alert
   group vcap
 <% end -%>
